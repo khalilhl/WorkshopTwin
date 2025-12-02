@@ -15,11 +15,13 @@ export class ListEventComponent {
   //increment nbLikes
 
   ngOnInit() {
-    this.eventList = this.data.getEventList();
-    this.filteredList = this.eventList;
+       this.data.getAllEventsFromBacked().subscribe(
+      (res) => (this.eventList = res))
+      console.log(this.eventList)
+
   }
   incLikes(event: Event) {
-    return event.nbrLikes++;
+    return event.nbLikes++;
   }
 
   buy(event: Event) {
@@ -32,14 +34,13 @@ export class ListEventComponent {
 
   filter() {
     console.log(this.filteredList);
-    return this.filteredList;
-    // .filter(
-    //     (eventItem) =>
-    //       eventItem.titre
-    //         .toLowerCase()
-    //         .includes(this.searchItem.toLowerCase()) ||
-    //       eventItem.lieu.toLowerCase().includes(this.searchItem.toLowerCase())
-    //   );
+    return this.eventList.filter(
+        (eventItem) =>
+          eventItem.title
+            .toLowerCase()
+            .includes(this.searchItem.toLowerCase()) ||
+          eventItem.place.toLowerCase().includes(this.searchItem.toLowerCase())
+      );
    
   }
   }

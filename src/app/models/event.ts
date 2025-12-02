@@ -1,13 +1,13 @@
 export interface Event {
   id: number;
-  titre: string;
+  title: string;
   description: string;
   date: Date;
-  lieu: string;
-  prix: number;
-  organisateurId: number;
+  place: string;
+  price: number;
+  organizerId: number;
   imageUrl: string;
   nbPlaces: number;
-  nbrLikes: number;
+  nbLikes: number;
   domaines ?:string[]
 }

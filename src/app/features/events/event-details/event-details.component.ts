@@ -17,7 +17,8 @@ export class EventDetailsComponent {
   ngOnInit(){
     console.log(this.actRoute)
     this.id=this.actRoute.snapshot.params["id"];
-    this.eventDetails=this.dataService.getEventById(this.id);
+    this.dataService.getEventByIdFromBackend(this.id).subscribe({
+      next:(response)=>this.eventDetails=response,});
   }
 
 }

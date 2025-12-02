@@ -6,14 +6,14 @@
   />
 
   <div class="card-body">
-    <h5 class="card-title">{{ event.titre | capitalizeFirst }}</h5>
-    <p class="text-muted">{{ event.lieu }}</p>
+    <h5 class="card-title">{{ event.title | capitalizeFirst }}</h5>
+    <p class="text-muted">{{ event.place }}</p>
     <p>{{ event.date }}</p>
     <p class="fw-bold"></p>
     <p>{{ event.description }}</p>
-    <p>{{ event.prix }}</p>
+    <p>{{ event.price }}</p>
     <p>{{ event.nbPlaces }}</p>
-    <p>nbr likes: {{ event.nbrLikes }}</p>
+    <p>nbr likes: {{ event.nbLikes }}</p>
 
     <!-- Bouton Like -->
     <button
@@ -34,8 +34,12 @@
       more details
     </button>
 
-    <button class="btn btn-sm btn-primary" (click)="participate(event.id,event.prix)" [disabled]="event.nbPlaces==0">
-     Participer
+    <button
+      class="btn btn-sm btn-primary"
+      (click)="participate(event.id, event.price)"
+      [disabled]="event.nbPlaces == 0"
+    >
+      Participer
     </button>
 
     <span class="ms-2">put your data</span>

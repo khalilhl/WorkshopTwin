@@ -80,19 +80,19 @@ export class AddEventComponent {
     const formValue = this.eventForm.value;
     const newEvent: Event = {
       id: 5,
-      titre: formValue.titre,
+      title: formValue.titre,
       description: formValue.description,
       date: new Date(formValue.date),
-      prix: Number(formValue.prix),
+      price: Number(formValue.prix),
       nbPlaces: Number(formValue.nbPlaces),
-      lieu: formValue.lieu,
+      place: formValue.lieu,
       imageUrl: formValue.imageUrl || '',
       domaines: formValue.domaines,
-      organisateurId: 1,
-      nbrLikes: 0,
+      organizerId: 1,
+      nbLikes: 0,
     };
 
-    this.eventService.addEvent(newEvent);
+    // this.eventService.addEvent(newEvent);
     this.router.navigate(['/events']);
   }
 }
