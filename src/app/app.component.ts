@@ -8,5 +8,5 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'WorkshopTwin';
   version = '1.0.0';
-  // Update: 07/12/2025
+  description = 'Event Management Platform';
 }
