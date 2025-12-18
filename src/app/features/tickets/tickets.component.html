@@ -1,1 +1,98 @@
-<p>tickets works!</p>
+<div class="container py-4">
+  <h2 class="mb-4">Mes Tickets</h2>
+
+  <!-- Message de chargement -->
+  <div *ngIf="isLoading" class="text-center py-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Chargement...</span>
+    </div>
+    <p class="mt-3">Chargement de vos tickets...</p>
+  </div>
+
+  <!-- Message d'erreur -->
+  <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Liste des tickets -->
+  <div *ngIf="!isLoading && !errorMessage">
+    <!-- Message si aucun ticket -->
+    <div *ngIf="tickets.length === 0" class="alert alert-info" role="alert">
+      <h5>Aucun ticket trouvé</h5>
+      <p>Vous n'avez pas encore acheté de tickets. Visitez la page <a routerLink="/events">Événements</a> pour en acheter.</p>
+    </div>
+
+    <!-- Liste des tickets -->
+    <div class="row g-4" *ngIf="tickets.length > 0">
+      <div class="col-md-6 col-lg-4" *ngFor="let ticket of tickets">
+        <div class="card h-100 shadow-sm">
+          <!-- Image de l'événement -->
+          <img
+            *ngIf="ticket.event?.imageUrl"
+            [src]="ticket.event?.imageUrl || ''"
+            class="card-img-top"
+            [alt]="ticket.event?.title || 'Événement'"
+            style="height: 200px; object-fit: cover;"
+          />
+          <div class="card-body d-flex flex-column">
+            <!-- Titre de l'événement -->
+            <h5 class="card-title" *ngIf="ticket.event">
+              {{ ticket.event.title }}
+            </h5>
+            <h5 class="card-title text-muted" *ngIf="!ticket.event">
+              Événement #{{ ticket.eventId }}
+            </h5>
+
+            <!-- Détails de l'événement -->
+            <div *ngIf="ticket.event" class="mb-2">
+              <p class="mb-1">
+                <strong>📅 Date:</strong> {{ formatDate(ticket.event.date) }}
+              </p>
+              <p class="mb-1">
+                <strong>📍 Lieu:</strong> {{ ticket.event.place }}
+              </p>
+              <p class="mb-1">
+                <strong>💰 Prix unitaire:</strong> {{ ticket.event.price }} DT
+              </p>
+            </div>
+
+            <!-- Détails du ticket -->
+            <div class="mb-3">
+              <p class="mb-1">
+                <strong>🎫 Nombre de places:</strong> {{ ticket.nbPlaces }}
+              </p>
+              <p class="mb-1">
+                <strong>📧 Email:</strong> {{ ticket.emailParticipant }}
+              </p>
+              <p class="mb-1">
+                <strong>📅 Date d'achat:</strong> {{ formatDate(ticket.registrationDate) }}
+              </p>
+              <p class="mb-1">
+                <strong>Status:</strong>
+                <span [class]="getStatusClass(ticket.status)" class="ms-2">
+                  {{ getStatusLabel(ticket.status) }}
+                </span>
+              </p>
+            </div>
+
+            <!-- Prix total -->
+            <div class="mt-auto">
+              <p class="h5 text-primary mb-3">
+                <strong>Total: {{ calculateTotal(ticket.event, ticket.nbPlaces) }} DT</strong>
+              </p>
+
+              <!-- Bouton d'annulation -->
+              <button
+                *ngIf="ticket.status === 'CONFIRMED'"
+                class="btn btn-outline-danger w-100"
+                (click)="cancelTicket(ticket)"
+              >
+                Annuler le ticket
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

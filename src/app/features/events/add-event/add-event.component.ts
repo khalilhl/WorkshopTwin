@@ -20,7 +20,7 @@ export class AddEventComponent {
       title: new FormControl('', [
         Validators.required,
         Validators.minLength(5),
-        Validators.pattern('[a-zA-Z]*'),
+        Validators.pattern('[a-zA-Z0-9\\s\\-]+'),
       ]),
       description: new FormControl('', [
         Validators.required,
@@ -44,7 +44,7 @@ export class AddEventComponent {
   }
 
   ngOnInit() {
-    //this.eventForm = FormGroup([]);
+    // Initialisation complétée dans le constructeur
   }
 
   get title() {
@@ -72,27 +72,51 @@ export class AddEventComponent {
   }
 
   onSubmit() {
-    // console.log(this.eventForm.value);
-    // const formValue = this.eventForm.value;
-    // let newEvent = {};
-    // newEvent = formValue;
-    // console.log(newEvent);
+    if (this.eventForm.invalid) {
+      return;
+    }
+
     const formValue = this.eventForm.value;
-    const newEvent: Event = {
-      id: 5,
-      title: formValue.titre,
+    
+    // Convertir la date au format string (YYYY-MM-DD) pour JSON Server
+    const dateObj = new Date(formValue.date);
+    const dateString = dateObj.toISOString().split('T')[0];
+    
+    // Filtrer les domaines vides
+    const domainesArray = formValue.domaines 
+      ? formValue.domaines.filter((d: string) => d && d.trim() !== '')
+      : [];
+
+    // Préparer l'objet à envoyer (sans l'id pour que JSON Server le génère)
+    const eventToSend: any = {
+      title: formValue.title,
       description: formValue.description,
-      date: new Date(formValue.date),
+      date: dateString, // Format string pour JSON Server
       price: Number(formValue.prix),
-      nbPlaces: Number(formValue.nbPlaces),
+      nbPlaces: Number(formValue.nbrPlace),
       place: formValue.lieu,
-      imageUrl: formValue.imageUrl || '',
-      domaines: formValue.domaines,
-      organizerId: 1,
+      imageUrl: formValue.urlImage || 'images/event.png',
+      organizerId: Number(formValue.organisedId),
       nbLikes: 0,
     };
 
-    // this.eventService.addEvent(newEvent);
-    this.router.navigate(['/events']);
+    // Ajouter les domaines seulement s'il y en a
+    if (domainesArray.length > 0) {
+      eventToSend.domaines = domainesArray;
+    }
+
+    console.log('Envoi de l\'événement:', eventToSend);
+
+    this.eventService.addEvent(eventToSend).subscribe({
+      next: (response) => {
+        console.log('Événement ajouté avec succès:', response);
+        this.router.navigate(['/events']);
+      },
+      error: (error) => {
+        console.error('Erreur lors de l\'ajout de l\'événement:', error);
+        console.error('Détails de l\'erreur:', error.error);
+        alert(`Erreur lors de l'ajout de l'événement: ${error.message || 'Vérifiez que le serveur JSON Server est démarré sur le port 3000'}`);
+      }
+    });
   }
 }

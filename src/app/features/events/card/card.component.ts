@@ -28,4 +28,9 @@ export class CardComponent {
   participate(id: number, prix: number) {
     this.route.navigate(['/events/participate', id, prix]);
   }
+
+  buyTicket(id: number, prix: number) {
+    // Utiliser la même route que participate pour le formulaire
+    this.route.navigate(['/events/participate', id, prix]);
+  }
 }

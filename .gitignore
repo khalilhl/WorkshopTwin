@@ -40,3 +40,24 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# Backend build files
+backend/target/
+backend/.mvn/
+
+# Environment files
+.env
+.env.local
+*.env
+
+# Application properties avec mots de passe (optionnel - garder si nécessaire)
+# backend/src/main/resources/application.properties
+
+# Logs
+*.log
+logs/
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3

@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class DataService {
-  private apiEventsUrl = 'http://localhost:3000/events';
+  private apiEventsUrl = 'http://localhost:8081/api/events';
   constructor(private _http:HttpClient){}
 
   getAllEventsFromBacked(): Observable<Event[]> {
@@ -16,6 +16,10 @@ export class DataService {
 
   getEventByIdFromBackend(id:number):Observable<Event>{
     return this._http.get<Event>(this.apiEventsUrl+'/'+id)
+  }
+
+  addEvent(event: any): Observable<Event> {
+    return this._http.post<Event>(this.apiEventsUrl, event);
   }
 
 

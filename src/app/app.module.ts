@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -22,7 +23,7 @@ import { provideHttpClient } from '@angular/common/http';
     NotfoundComponent,
     TestComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, FormsModule],
+  imports: [BrowserModule, CommonModule, AppRoutingModule, FormsModule],
   providers: [provideHttpClient()],
   bootstrap: [AppComponent],
 })

@@ -17,8 +17,8 @@
     <div class="col-md-4" *ngFor="let event of filter()">
       <app-card
         [event]="event"
-        (notifLike)="buy(event)"
         (notifLike)="incLikes(event)"
+        (notifBuy)="buy(event)"
       ></app-card>
     </div>
   </div>

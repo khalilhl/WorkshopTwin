@@ -45,10 +45,54 @@
             >Feedback</a
           >
         </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/auth/login" hrefActive="active"
-            >Se connecter</a
+        <!-- Menu utilisateur connecté -->
+        <li class="nav-item dropdown" *ngIf="isAuthenticated">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="userDropdown"
+            role="button"
+            (click)="toggleDropdown(); $event.preventDefault()"
+            [attr.aria-expanded]="dropdownOpen"
+            style="cursor: pointer;"
           >
+            👤 {{ currentUser?.username || currentUser?.email }}
+          </a>
+          <ul 
+            class="dropdown-menu dropdown-menu-end" 
+            aria-labelledby="userDropdown"
+            [class.show]="dropdownOpen"
+            [style.display]="dropdownOpen ? 'block' : 'none'"
+          >
+            <li>
+              <h6 class="dropdown-header">
+                {{ currentUser?.username || currentUser?.email }}
+              </h6>
+            </li>
+            <li>
+              <a class="dropdown-item" href="#">
+                <small class="text-muted">{{ currentUser?.email }}</small>
+              </a>
+            </li>
+            <li><hr class="dropdown-divider" /></li>
+            <li>
+              <a class="dropdown-item text-danger" (click)="logout(); $event.preventDefault()" style="cursor: pointer;">
+                🚪 Déconnexion
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <!-- Boutons connexion/inscription si non connecté -->
+        <li class="nav-item" *ngIf="!isAuthenticated">
+          <a class="nav-link" routerLink="/auth/login" hrefActive="active">
+            Se connecter
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="!isAuthenticated">
+          <a class="nav-link" routerLink="/auth/register" hrefActive="active">
+            S'inscrire
+          </a>
         </li>
       </ul>
     </div>

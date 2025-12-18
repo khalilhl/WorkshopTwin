@@ -23,23 +23,15 @@
     >
       👍 Like
     </button>
-    <button
-      class="btn btn-sm btn-primary"
-      (click)="buyEvent(event)"
+    <button 
+      class="btn btn-sm btn-success" 
+      [routerLink]="['./participate', event.id, event.price]"
       [disabled]="event.nbPlaces == 0"
     >
-      buy ticket
+      🎫 Réserver
     </button>
     <button class="btn btn-sm btn-primary" [routerLink]="['./', event.id]">
-      more details
-    </button>
-
-    <button
-      class="btn btn-sm btn-primary"
-      (click)="participate(event.id, event.price)"
-      [disabled]="event.nbPlaces == 0"
-    >
-      Participer
+      📋 Détails
     </button>
 
     <span class="ms-2">put your data</span>

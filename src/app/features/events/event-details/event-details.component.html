@@ -1,2 +1,210 @@
-<p>event-details works!</p>
-{{ eventDetails.id }} - {{ eventDetails.date }} -{{ eventDetails.description }}
+<!-- Loading State -->
+<div class="container py-5" *ngIf="isLoading">
+  <div class="text-center">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Chargement...</span>
+    </div>
+    <p class="mt-3">Chargement des détails de l'événement...</p>
+  </div>
+</div>
+
+<!-- Error State -->
+<div class="container py-5" *ngIf="!isLoading && errorMessage">
+  <div class="alert alert-danger" role="alert">
+    <h4 class="alert-heading">Erreur !</h4>
+    <p>{{ errorMessage }}</p>
+    <hr>
+    <button class="btn btn-primary" (click)="goBack()">Retour aux événements</button>
+  </div>
+</div>
+
+<!-- Event Details -->
+<div *ngIf="!isLoading && !errorMessage && eventDetails" class="event-details-page">
+  <!-- Hero Image Section -->
+  <div class="hero-section" [style.background-image]="'url(' + eventDetails.imageUrl + ')'">
+    <div class="hero-overlay">
+      <div class="container">
+        <button class="btn btn-light btn-sm mb-3" (click)="goBack()">
+          <i class="bi bi-arrow-left"></i> Retour
+        </button>
+        <h1 class="hero-title">{{ eventDetails.title }}</h1>
+        <div class="hero-badges">
+          <span class="badge bg-light text-dark me-2" *ngIf="eventDetails.price === 0">Gratuit</span>
+          <span class="badge bg-success me-2" *ngIf="eventDetails.nbPlaces > 0 && !dateExpired()">
+            {{ eventDetails.nbPlaces }} places disponibles
+          </span>
+          <span class="badge bg-danger me-2" *ngIf="eventDetails.nbPlaces === 0 || dateExpired()">
+            {{ dateExpired() ? 'Événement terminé' : 'Complet' }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="container py-5">
+    <div class="row">
+      <!-- Left Column: Event Info -->
+      <div class="col-lg-8">
+        <!-- Description -->
+        <section class="mb-5">
+          <h2 class="section-title">À propos de cet événement</h2>
+          <p class="lead">{{ eventDetails.description }}</p>
+        </section>
+
+        <!-- Event Details Card -->
+        <section class="mb-5">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <h3 class="card-title mb-4">
+                <i class="bi bi-info-circle text-primary me-2"></i>
+                Informations de l'événement
+              </h3>
+              
+              <div class="row g-4">
+                <div class="col-md-6">
+                  <div class="info-item">
+                    <i class="bi bi-calendar-event text-primary"></i>
+                    <div>
+                      <strong>Date et heure</strong>
+                      <p class="mb-0">{{ formatDate(eventDetails.date) }}</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="col-md-6">
+                  <div class="info-item">
+                    <i class="bi bi-geo-alt-fill text-danger"></i>
+                    <div>
+                      <strong>Lieu</strong>
+                      <p class="mb-0">{{ eventDetails.place }}</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="col-md-6">
+                  <div class="info-item">
+                    <i class="bi bi-ticket-perforated text-success"></i>
+                    <div>
+                      <strong>Places disponibles</strong>
+                      <p class="mb-0">{{ eventDetails.nbPlaces }} places</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="col-md-6">
+                  <div class="info-item">
+                    <i class="bi bi-currency-euro text-warning"></i>
+                    <div>
+                      <strong>Prix</strong>
+                      <p class="mb-0">
+                        <span class="h5 mb-0" *ngIf="eventDetails.price > 0">
+                          {{ eventDetails.price }} DT
+                        </span>
+                        <span class="h5 text-success mb-0" *ngIf="eventDetails.price === 0">
+                          Gratuit
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Domaines -->
+              <div class="mt-4" *ngIf="eventDetails.domaines && eventDetails.domaines.length > 0">
+                <strong>Domaines :</strong>
+                <div class="mt-2">
+                  <span 
+                    class="badge bg-primary me-2 mb-2" 
+                    *ngFor="let domaine of eventDetails.domaines">
+                    {{ domaine }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Right Column: Actions & Stats -->
+      <div class="col-lg-4">
+        <!-- Action Card -->
+        <div class="card shadow-lg sticky-top action-card mb-4">
+          <div class="card-body text-center">
+            <div class="price-section mb-4">
+              <div class="price-label">Prix du billet</div>
+              <div class="price-value" *ngIf="eventDetails.price > 0">
+                {{ eventDetails.price }} DT
+              </div>
+              <div class="price-value text-success" *ngIf="eventDetails.price === 0">
+                Gratuit
+              </div>
+            </div>
+
+            <div class="d-grid gap-2 mb-3">
+              <button 
+                class="btn btn-primary btn-lg" 
+                (click)="goToReservation()"
+                [disabled]="eventDetails.nbPlaces === 0 || dateExpired()">
+                <i class="bi bi-ticket-perforated me-2"></i>
+                {{ eventDetails.nbPlaces === 0 ? 'Complet' : dateExpired() ? 'Terminé' : 'Réserver maintenant' }}
+              </button>
+              
+              <button 
+                class="btn btn-outline-primary" 
+                (click)="likeEvent()"
+                [disabled]="dateExpired()">
+                <i class="bi bi-heart me-2"></i>
+                J'aime ({{ eventDetails.nbLikes }})
+              </button>
+            </div>
+
+            <hr>
+
+            <!-- Stats -->
+            <div class="stats-section">
+              <div class="stat-item">
+                <i class="bi bi-heart-fill text-danger"></i>
+                <span>{{ eventDetails.nbLikes }} likes</span>
+              </div>
+              <div class="stat-item">
+                <i class="bi bi-people-fill text-primary"></i>
+                <span>{{ eventDetails.nbPlaces }} places</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Info Card -->
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h6 class="card-title">
+              <i class="bi bi-clock-history me-2"></i>
+              Détails rapides
+            </h6>
+            <ul class="list-unstyled mb-0">
+              <li class="mb-2">
+                <small class="text-muted">
+                  <i class="bi bi-calendar me-1"></i>
+                  {{ formatDate(eventDetails.date) }}
+                </small>
+              </li>
+              <li class="mb-2">
+                <small class="text-muted">
+                  <i class="bi bi-geo-alt me-1"></i>
+                  {{ eventDetails.place }}
+                </small>
+              </li>
+              <li *ngIf="eventDetails.organizerId">
+                <small class="text-muted">
+                  <i class="bi bi-person-circle me-1"></i>
+                  Organisateur #{{ eventDetails.organizerId }}
+                </small>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

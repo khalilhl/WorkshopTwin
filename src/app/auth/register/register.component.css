@@ -1,0 +1,29 @@
+.card {
+  border: none;
+  border-radius: 10px;
+}
+
+.card-title {
+  color: #333;
+  font-weight: 600;
+}
+
+.btn-success {
+  background-color: #28a745;
+  border: none;
+  transition: background-color 0.3s;
+}
+
+.btn-success:hover:not(:disabled) {
+  background-color: #218838;
+}
+
+.form-control:focus {
+  border-color: #86b7fe;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+.text-danger {
+  color: #dc3545;
+}
+

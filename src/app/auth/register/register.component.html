@@ -1,0 +1,111 @@
+<div class="container">
+  <div class="row justify-content-center mt-5">
+    <div class="col-md-6 col-lg-5">
+      <div class="card shadow">
+        <div class="card-body p-4">
+          <h2 class="card-title text-center mb-4">Créer un compte</h2>
+          
+          <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+            <!-- Username -->
+            <div class="mb-3">
+              <label for="username" class="form-label">Nom d'utilisateur <span class="text-danger">*</span></label>
+              <input
+                type="text"
+                class="form-control"
+                id="username"
+                formControlName="username"
+                [class.is-invalid]="username?.invalid && username?.touched"
+                placeholder="Entrez votre nom d'utilisateur"
+              />
+              <div class="invalid-feedback" *ngIf="username?.invalid && username?.touched">
+                <span *ngIf="username?.errors?.['required']">Le nom d'utilisateur est requis</span>
+                <span *ngIf="username?.errors?.['minlength']">Au moins 3 caractères requis</span>
+                <span *ngIf="username?.errors?.['maxlength']">Maximum 20 caractères</span>
+              </div>
+            </div>
+
+            <!-- Email -->
+            <div class="mb-3">
+              <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                formControlName="email"
+                [class.is-invalid]="email?.invalid && email?.touched"
+                placeholder="votre.email@example.com"
+              />
+              <div class="invalid-feedback" *ngIf="email?.invalid && email?.touched">
+                <span *ngIf="email?.errors?.['required']">L'email est requis</span>
+                <span *ngIf="email?.errors?.['email']">Veuillez entrer un email valide</span>
+              </div>
+            </div>
+
+            <!-- Password -->
+            <div class="mb-3">
+              <label for="password" class="form-label">Mot de passe <span class="text-danger">*</span></label>
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                formControlName="password"
+                [class.is-invalid]="password?.invalid && password?.touched"
+                placeholder="Minimum 4 caractères"
+              />
+              <div class="invalid-feedback" *ngIf="password?.invalid && password?.touched">
+                <span *ngIf="password?.errors?.['required']">Le mot de passe est requis</span>
+                <span *ngIf="password?.errors?.['minlength']">Au moins 4 caractères requis</span>
+              </div>
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="mb-3">
+              <label for="confirmPassword" class="form-label">Confirmer le mot de passe <span class="text-danger">*</span></label>
+              <input
+                type="password"
+                class="form-control"
+                id="confirmPassword"
+                formControlName="confirmPassword"
+                [class.is-invalid]="(confirmPassword?.invalid || registerForm.errors?.['passwordMismatch']) && confirmPassword?.touched"
+                placeholder="Répétez votre mot de passe"
+              />
+              <div class="invalid-feedback" *ngIf="(confirmPassword?.invalid || registerForm.errors?.['passwordMismatch']) && confirmPassword?.touched">
+                <span *ngIf="confirmPassword?.errors?.['required']">La confirmation du mot de passe est requise</span>
+                <span *ngIf="registerForm.errors?.['passwordMismatch']">Les mots de passe ne correspondent pas</span>
+              </div>
+            </div>
+
+            <!-- Error Message -->
+            <div class="alert alert-danger" *ngIf="errorMessage" role="alert">
+              {{ errorMessage }}
+            </div>
+
+            <!-- Submit Button -->
+            <div class="d-grid">
+              <button
+                type="submit"
+                class="btn btn-success btn-lg"
+                [disabled]="registerForm.invalid || isLoading"
+              >
+                <span *ngIf="!isLoading">Créer mon compte</span>
+                <span *ngIf="isLoading">
+                  <span class="spinner-border spinner-border-sm me-2" role="status"></span>
+                  Création en cours...
+                </span>
+              </button>
+            </div>
+          </form>
+
+          <!-- Lien vers la connexion -->
+          <div class="mt-3 text-center">
+            <small class="text-muted">
+              Vous avez déjà un compte ? 
+              <a routerLink="/auth/login" class="text-primary">Se connecter</a>
+            </small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

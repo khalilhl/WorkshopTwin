@@ -1,6 +1,7 @@
-{"events": [
+{
+  "events": [
     {
-      "id": 1,
+      "id": "1",
       "title": "Angular Summit",
       "description": "Conférence sur Angular et l’écosystème front-end",
       "date": "2025-11-10",
@@ -12,7 +13,7 @@
       "nbLikes": 0
     },
     {
-      "id": 2,
+      "id": "2",
       "title": "Web dev days",
       "description": "Journée dédiée aux frameworks web modernes.",
       "date": "2025-01-05",
@@ -22,5 +23,21 @@
       "imageUrl": "images/event.png",
       "nbPlaces": 0,
       "nbLikes": 0
-    }]
+    },
+    {
+      "id": "2f2c",
+      "title": "test1234s df",
+      "description": "sdfsd sdfsd fdsf sdf sdf ssdf sd",
+      "date": "2026-01-03",
+      "price": 123,
+      "nbPlaces": 12,
+      "place": "Tunissdf",
+      "imageUrl": "tesrsdf ",
+      "organizerId": 1,
+      "nbLikes": 0,
+      "domaines": [
+        "sdfsdfsd"
+      ]
+    }
+  ]
 }

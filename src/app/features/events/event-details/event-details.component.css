@@ -1,0 +1,201 @@
+.event-details-page {
+  min-height: 100vh;
+}
+
+/* Hero Section */
+.hero-section {
+  position: relative;
+  height: 400px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: flex-end;
+}
+
+.hero-overlay {
+  width: 100%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 50%, transparent 100%);
+  padding: 3rem 0 2rem;
+  color: white;
+}
+
+.hero-title {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.hero-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.hero-badges .badge {
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+}
+
+/* Section Title */
+.section-title {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: #333;
+  border-bottom: 3px solid #007bff;
+  padding-bottom: 0.5rem;
+}
+
+/* Info Items */
+.info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.info-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.info-item i {
+  font-size: 1.5rem;
+  margin-top: 0.25rem;
+  flex-shrink: 0;
+}
+
+.info-item strong {
+  display: block;
+  margin-bottom: 0.25rem;
+  color: #495057;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.info-item p {
+  color: #212529;
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+/* Action Card */
+.action-card {
+  top: 2rem;
+  border: none;
+  border-radius: 12px;
+}
+
+.price-section {
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 8px;
+  color: white;
+}
+
+.price-label {
+  font-size: 0.9rem;
+  opacity: 0.9;
+  margin-bottom: 0.5rem;
+}
+
+.price-value {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.stats-section {
+  display: flex;
+  justify-content: space-around;
+  padding-top: 1rem;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.stat-item i {
+  font-size: 1.5rem;
+}
+
+.stat-item span {
+  font-size: 0.9rem;
+  color: #6c757d;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .hero-section {
+    height: 300px;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+  }
+
+  .action-card {
+    position: static !important;
+  }
+
+  .info-item {
+    margin-bottom: 1rem;
+  }
+}
+
+/* Card Enhancements */
+.card {
+  border: none;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.card-title {
+  font-weight: 600;
+  color: #212529;
+}
+
+/* Button Enhancements */
+.btn-lg {
+  padding: 0.75rem 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.btn-outline-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.2);
+}
+
+/* Badge Enhancements */
+.badge {
+  padding: 0.5rem 0.75rem;
+  font-weight: 500;
+  border-radius: 6px;
+}
+
